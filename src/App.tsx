@@ -2,41 +2,59 @@ import { useState } from "react";
 import { DEFAULT_FORMAT_ID, getFormat } from "./formats.ts";
 import { FormatPicker } from "./FormatPicker.tsx";
 import { Stage } from "./Stage.tsx";
+import { PlaybackControls } from "./PlaybackControls.tsx";
 
 export function App() {
   const [activeId, setActiveId] = useState(DEFAULT_FORMAT_ID);
+  const [videoEl, setVideoEl] = useState<HTMLVideoElement | null>(null);
+  const [expanded, setExpanded] = useState(false);
   const format = getFormat(activeId);
+
+  const select = (id: string) => {
+    setActiveId(id);
+    setExpanded(false);
+  };
 
   return (
     <div className="app">
       <header className="masthead">
         <div className="masthead__kicker">A FridgeMax™ Premium Presentation</div>
         <h1 className="masthead__title">The Odyssey</h1>
-        <p className="masthead__sub">
-          Experience the cinematic event of a generation in the format its
-          hardware deserves. Expand your view. Then crop it. Then dither it.
-        </p>
       </header>
 
       <main className="showcase">
-        <Stage format={format} />
+        <Stage format={format} video={videoEl} onVideo={setVideoEl} />
+        <PlaybackControls video={videoEl} />
         <div className="showcase__meta">
           <h2 className="showcase__name">{format.name}</h2>
           <p className="showcase__tagline">{format.tagline}</p>
+          <div className="showcase__spec">
+            {format.spec}
+            {format.badge ? (
+              <span className="showcase__badge"> · {format.badge}</span>
+            ) : null}
+          </div>
+          <button
+            type="button"
+            className="learnmore"
+            aria-expanded={expanded}
+            onClick={() => setExpanded((v) => !v)}
+          >
+            {expanded ? "Less ▴" : "Learn More ▾"}
+          </button>
+          <p className={`blurb ${expanded ? "blurb--open" : ""}`}>
+            {format.blurb}
+          </p>
         </div>
       </main>
 
-      <FormatPicker activeId={activeId} onSelect={(f) => setActiveId(f.id)} />
+      <FormatPicker activeId={activeId} onSelect={(f) => select(f.id)} />
 
       <footer className="footer">
-        <button type="button" className="cta" disabled>
-          Find a screening near you ▸
-        </button>
         <p className="footer__fine">
-          FridgeMax™ is a parody and is not affiliated with, endorsed by, or
-          cooled to the correct temperature by any studio, appliance
-          manufacturer, or handheld console. No Milk Duds were harmed. “IMAX” is
-          a trademark of its respective owner, referenced here for the bit.
+          FridgeMax™ is a parody, not affiliated with any studio, appliance
+          manufacturer, or handheld console. “IMAX” is a trademark of its
+          respective owner, referenced here for the bit.
         </p>
       </footer>
     </div>

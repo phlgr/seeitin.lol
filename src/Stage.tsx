@@ -1,10 +1,12 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { FormatDescriptor } from "./formats.ts";
 import { ShaderCanvas } from "./ShaderCanvas.tsx";
-import { TRAILER_SRC } from "./config.ts";
+import { TRAILER_POSTER, TRAILER_SRC } from "./config.ts";
 
 interface Props {
   format: FormatDescriptor;
+  video: HTMLVideoElement | null;
+  onVideo: (el: HTMLVideoElement | null) => void;
 }
 
 /** Fit a box of the given aspect ratio inside the container (letter/pillarbox). */
@@ -18,9 +20,8 @@ function fitBox(cw: number, ch: number, aspect: number) {
   return { w: Math.round(w), h: Math.round(h) };
 }
 
-export function Stage({ format }: Props) {
+export function Stage({ format, video, onVideo }: Props) {
   const stageRef = useRef<HTMLDivElement>(null);
-  const [videoEl, setVideoEl] = useState<HTMLVideoElement | null>(null);
   const [box, setBox] = useState({ w: 0, h: 0 });
   const [hasVideo, setHasVideo] = useState(true);
 
@@ -39,8 +40,8 @@ export function Stage({ format }: Props) {
 
   // Keep the shared <video> playing even while hidden behind a shader canvas.
   useEffect(() => {
-    videoEl?.play().catch(() => {});
-  }, [videoEl]);
+    video?.play().catch(() => {});
+  }, [video]);
 
   const isShader = format.renderer === "shader";
   const maskStyle: React.CSSProperties =
@@ -63,7 +64,7 @@ export function Stage({ format }: Props) {
       >
         {isShader ? (
           <ShaderCanvas
-            video={videoEl}
+            video={video}
             shader={format.shader!}
             width={box.w}
             height={box.h}
@@ -71,10 +72,12 @@ export function Stage({ format }: Props) {
         ) : null}
 
         <video
-          ref={setVideoEl}
+          ref={onVideo}
           className={`media ${isShader ? "media--offscreen" : ""}`}
           style={maskStyle}
           src={TRAILER_SRC}
+          poster={TRAILER_POSTER}
+          crossOrigin="anonymous"
           autoPlay
           loop
           muted
@@ -103,13 +106,6 @@ export function Stage({ format }: Props) {
         ) : null}
 
         {format.mask === "porthole" ? <div className="ov-vignette" /> : null}
-      </div>
-
-      <div className="stage__caption">
-        <span className="stage__spec">{format.spec}</span>
-        {format.badge ? (
-          <span className="stage__badge">{format.badge}</span>
-        ) : null}
       </div>
     </div>
   );
