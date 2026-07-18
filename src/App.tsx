@@ -18,7 +18,7 @@ export function App() {
   return (
     <div className="app">
       <header className="masthead">
-        <div className="masthead__kicker">A FridgeMax™ Premium Presentation</div>
+        <div className="masthead__kicker">See It In™</div>
         <h1 className="masthead__title">The Odyssey</h1>
       </header>
 
@@ -26,6 +26,7 @@ export function App() {
         <Stage format={format} video={videoEl} onVideo={setVideoEl} />
         <PlaybackControls video={videoEl} />
         <div className="showcase__meta">
+          <div className="showcase__lead">See it in</div>
           <h2 className="showcase__name">{format.name}</h2>
           <p className="showcase__tagline">{format.tagline}</p>
           <div className="showcase__spec">
@@ -52,7 +53,7 @@ export function App() {
 
       <footer className="footer">
         <p className="footer__fine">
-          FridgeMax™ is a parody, not affiliated with any studio, appliance
+          See It In™ is a parody, not affiliated with any studio, appliance
           manufacturer, or handheld console. “IMAX” is a trademark of its
           respective owner, referenced here for the bit.
         </p>

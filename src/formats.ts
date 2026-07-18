@@ -169,7 +169,7 @@ export const FORMATS: FormatDescriptor[] = [
     aspect: 9 / 16,
     renderer: "css",
     overlay: "weather",
-    badge: "FridgeMax Flagship™",
+    badge: "Certified Chilled™",
   },
   {
     id: "fitband",
@@ -224,11 +224,11 @@ export const FORMATS: FormatDescriptor[] = [
   },
   {
     id: "porthole",
-    name: "Porthole / Peephole",
-    tagline: "Someone is at the door. It is the Odyssey.",
+    name: "Porthole",
+    tagline: "Best appreciated mid-voyage, ideally a little seasick.",
     blurb:
-      "Viewed through a curved fisheye lens, as though peering out at Ithaca through the peephole of a very expensive front door. The corners belong to the sea now.",
-    spec: "circular · fisheye",
+      "Viewed through the thick convex glass of a ship's porthole — brass-rimmed, salt-flecked, and gently bulging at the center. The corners of the frame now belong to the sea.",
+    spec: "circular · convex glass",
     category: "round",
     aspect: 1,
     renderer: "mask",

@@ -1,4 +1,4 @@
-# FridgeMax™
+# See It In™ — seeitin.lol
 
 A parody of the official "The Odyssey" format-comparison site. Pick a screen —
 IMAX 70mm, a Samsung fridge, a round smartwatch, a Game Boy — and the trailer

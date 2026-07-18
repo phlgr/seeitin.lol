@@ -105,7 +105,7 @@ export function Stage({ format, video, onVideo }: Props) {
           </div>
         ) : null}
 
-        {format.mask === "porthole" ? <div className="ov-vignette" /> : null}
+        {format.mask === "porthole" ? <div className="ov-porthole" /> : null}
       </div>
     </div>
   );
