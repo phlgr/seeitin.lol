@@ -1,7 +1,7 @@
 export type Renderer = "css" | "mask" | "shader";
 export type MaskKind = "circle" | "porthole";
-export type ShaderKind = "gameboy" | "nokia" | "eink";
-export type OverlayKind = "weather" | "hinge" | "notch";
+export type ShaderKind = "gameboy" | "nokia" | "eink" | "dotmatrix";
+export type OverlayKind = "weather" | "hinge" | "island";
 
 export type Category =
   | "prestige"
@@ -55,7 +55,7 @@ export const FORMATS: FormatDescriptor[] = [
   {
     id: "imax70",
     name: "IMAX® 70mm",
-    tagline: "The format the filmmaker begs you not to settle below.",
+    tagline: "The complete image. Forty-one venues worldwide.",
     blurb:
       "Captured on cameras the size of a washing machine and roughly as quiet. The frame extends so far above and below the action that, at points, you will forget your own name and possibly your PIN.",
     spec: "1.43:1 · 70mm film",
@@ -67,7 +67,7 @@ export const FORMATS: FormatDescriptor[] = [
   {
     id: "scope",
     name: "Anamorphic Scope",
-    tagline: "For those who consider widescreen a personality.",
+    tagline: "Wider than necessary, exactly as intended.",
     blurb:
       "The ratio of prestige cinema and men who own a projector. Here, letterboxing is not a compromise; it is a lifestyle, and it is not up for discussion.",
     spec: "2.39:1",
@@ -78,7 +78,7 @@ export const FORMATS: FormatDescriptor[] = [
   {
     id: "academy",
     name: "Academy",
-    tagline: "The ratio your grandparents wept in.",
+    tagline: "Four by three. It was enough once.",
     blurb:
       "Nearly square, deeply serious. The way films looked before anyone had opinions about bars, aspect ratios, or the correct way to hold a phone.",
     spec: "1.375:1",
@@ -91,7 +91,7 @@ export const FORMATS: FormatDescriptor[] = [
   {
     id: "ultrawide",
     name: "Ultrawide Monitor",
-    tagline: "Cinema, but also 47 browser tabs.",
+    tagline: "The full width, docked beside your email.",
     blurb:
       "Engineered for spreadsheets and precisely one videogame. The Odyssey merely visits, sharing the panel with a half-finished email and your calendar.",
     spec: "21:9 (2.33:1)",
@@ -102,7 +102,7 @@ export const FORMATS: FormatDescriptor[] = [
   {
     id: "superultrawide",
     name: "Super-Ultrawide",
-    tagline: "You will lose the actors. That is the point.",
+    tagline: "Wider than the director dared imagine.",
     blurb:
       "Two monitors' worth of ambition fused into a single curved slab. Peripheral characters are now, quite literally, peripheral. Turn your head to see the ending.",
     spec: "32:9 (3.56:1)",
@@ -113,18 +113,19 @@ export const FORMATS: FormatDescriptor[] = [
   {
     id: "transit",
     name: "Transit Strip Display",
-    tagline: "Gate B14 is now boarding this masterpiece.",
+    tagline: "Presented in boarding-announcement amber.",
     blurb:
-      "Mounted above the departures desk, refreshing every forty seconds to remind you the flight is delayed. Homer, a man who took ten years to get home, would understand.",
-    spec: "≈8:1",
+      "Rendered in amber dot-matrix above the departures desk, refreshing every forty seconds to remind you the flight is delayed. Homer, a man who took ten years to get home, would understand.",
+    spec: "≈8:1 · amber LED matrix",
     category: "wide",
     aspect: 8,
-    renderer: "css",
+    renderer: "shader",
+    shader: "dotmatrix",
   },
   {
     id: "timessquare",
     name: "Times Square Billboard",
-    tagline: "Experienced from the sidewalk, beside a costumed Elmo.",
+    tagline: "Seen by millions, watched by none.",
     blurb:
       "Best appreciated at street level with the neck fully craned, as a man dressed as a beloved cartoon character firmly requests a photography fee.",
     spec: "12:1 (approx.)",
@@ -138,30 +139,19 @@ export const FORMATS: FormatDescriptor[] = [
   {
     id: "iphone",
     name: "iPhone (Vertical)",
-    tagline: "As Christopher Nolan intended: in one thumb's reach.",
+    tagline: "Ninety-four percent of the image respectfully removed.",
     blurb:
-      "Held vertically, as the algorithm demands. Filmmaker Mode ensures the notch crops only the most important four percent of every shot, for tension.",
+      "Held vertically, as the algorithm demands. Filmmaker Mode ensures the Dynamic Island hovers directly over the most important four percent of every shot, for tension.",
     spec: "9:19.5 · Filmmaker Mode",
     category: "vertical",
     aspect: 9 / 19.5,
     renderer: "css",
-    overlay: "notch",
-  },
-  {
-    id: "tiktok",
-    name: "TikTok / Reels",
-    tagline: "The Odyssey, now with a 3-second attention span.",
-    blurb:
-      "Optimized for the three seconds before a thumb swipes it into oblivion. A returning war hero has never felt more skippable. Add a trending sound to boost reach.",
-    spec: "9:16 (0.5625:1)",
-    category: "vertical",
-    aspect: 9 / 16,
-    renderer: "css",
+    overlay: "island",
   },
   {
     id: "fridge",
     name: "Samsung Family Hub™ Fridge",
-    tagline: "Peak cinema, keeping your Milk Duds at a crisp 3°C.",
+    tagline: "Best experienced standing, door slightly ajar.",
     blurb:
       "The 21.5-inch door panel presents the epic in crisp portrait while a helpful widget obscures the hero with today's forecast and a gentle reminder that you are low on limes.",
     spec: '9:16 portrait · 21.5" panel',
@@ -174,7 +164,7 @@ export const FORMATS: FormatDescriptor[] = [
   {
     id: "fitband",
     name: "Fitness Band",
-    tagline: "10,000 steps toward Ithaca.",
+    tagline: "The full frame, one centimeter at a time.",
     blurb:
       "A vertical slit of cinema, glimpsed between heart-rate readings. You will burn approximately four calories per act and receive a buzz when the sirens sing.",
     spec: "≈1:2.5 vertical slit",
@@ -187,7 +177,7 @@ export const FORMATS: FormatDescriptor[] = [
   {
     id: "instagram",
     name: "Instagram Square",
-    tagline: "Perfectly balanced. Deeply cropped. Very sorry.",
+    tagline: "Cropped square. The rest was unnecessary.",
     blurb:
       "Cropped square, filtered warm, captioned with a single wave emoji. Everyone who double-taps will simply assume you were personally at Troy.",
     spec: "1:1",
@@ -198,7 +188,7 @@ export const FORMATS: FormatDescriptor[] = [
   {
     id: "fold",
     name: "Foldable (Unfolded)",
-    tagline: "Now with a scenic crease down the protagonist's face.",
+    tagline: "Seamless storytelling, one seam.",
     blurb:
       "Unfolds to reveal a majestic near-square, marred only by a permanent hinge crease that runs directly down the protagonist's face at the emotional climax.",
     spec: "≈1.15:1 · hinge included",
@@ -212,7 +202,7 @@ export const FORMATS: FormatDescriptor[] = [
   {
     id: "watch",
     name: "Round Smartwatch",
-    tagline: "The most intimate 1.9 inches in cinema.",
+    tagline: "Cinema's first round aspect ratio.",
     blurb:
       "The entire odyssey, delivered to your wrist in a tasteful circle that dims automatically the instant you lower your arm to see where you are walking.",
     spec: "1:1 · circular",
@@ -225,7 +215,7 @@ export const FORMATS: FormatDescriptor[] = [
   {
     id: "porthole",
     name: "Porthole",
-    tagline: "Best appreciated mid-voyage, ideally a little seasick.",
+    tagline: "Round, brass-rimmed, intermittently submerged.",
     blurb:
       "Viewed through the thick convex glass of a ship's porthole — brass-rimmed, salt-flecked, and gently bulging at the center. The corners of the frame now belong to the sea.",
     spec: "circular · convex glass",
@@ -239,7 +229,7 @@ export const FORMATS: FormatDescriptor[] = [
   {
     id: "gameboy",
     name: "Game Boy",
-    tagline: "The Aegean, in four tasteful shades of green.",
+    tagline: "160 by 144, in four archival greens.",
     blurb:
       "Rendered in four immortal shades of green on a display that demands a desk lamp, a steady hand, and unshakeable faith that the boat is on the left.",
     spec: "160×144 · 4-color DMG",
@@ -252,7 +242,7 @@ export const FORMATS: FormatDescriptor[] = [
   {
     id: "nokia",
     name: "Nokia 3310",
-    tagline: "Indestructible. Unlike your suspension of disbelief.",
+    tagline: "Eighty-four pixels wide. Nothing important lost.",
     blurb:
       "Eighty-four by forty-eight pixels of pure, dithered drama. Survives a three-storey drop, a decade in a drawer, and any attempt to identify which shape is Odysseus.",
     spec: "84×48 · monochrome",
@@ -264,7 +254,7 @@ export const FORMATS: FormatDescriptor[] = [
   {
     id: "eink",
     name: "Kindle E-Ink",
-    tagline: "The entire trailer, in roughly nine meditative frames.",
+    tagline: "Sixteen shades of grey, refreshed when ready.",
     blurb:
       "Refreshing at approximately one frame per second, the trailer becomes a series of contemplative charcoal etchings. Allow a full afternoon for the runtime.",
     spec: "4:3 · grayscale · ~1fps",

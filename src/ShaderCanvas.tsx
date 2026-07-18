@@ -13,6 +13,7 @@ const BUFFER: Record<ShaderKind, { w: number; h: number; fps: number }> = {
   gameboy: { w: 160, h: 144, fps: 30 },
   nokia: { w: 84, h: 48, fps: 15 },
   eink: { w: 180, h: 135, fps: 1 },
+  dotmatrix: { w: 168, h: 21, fps: 20 },
 };
 
 // Classic DMG Game Boy 4-tone palette (dark → light green).
@@ -118,6 +119,34 @@ export function ShaderCanvas({ video, shader, width, height }: Props) {
       bctx.putImageData(img, 0, 0);
     };
 
+    // Amber LED dot-matrix board (transit/airport strip signage).
+    const renderDotMatrix = () => {
+      const img = bctx.getImageData(0, 0, w, h);
+      const d = img.data;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#080604";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      const cw = canvas.width / w;
+      const ch = canvas.height / h;
+      const r = Math.min(cw, ch) * 0.42;
+      for (let y = 0; y < h; y++) {
+        for (let x = 0; x < w; x++) {
+          const i = (y * w + x) * 4;
+          const lum = luminance(d[i], d[i + 1], d[i + 2]) / 255;
+          const cx = x * cw + cw / 2;
+          const cy = y * ch + ch / 2;
+          ctx.beginPath();
+          ctx.arc(cx, cy, r, 0, Math.PI * 2);
+          if (lum > 0.1) {
+            ctx.fillStyle = `rgba(255,176,0,${Math.min(1, 0.15 + lum)})`;
+          } else {
+            ctx.fillStyle = "rgba(70,40,0,0.5)";
+          }
+          ctx.fill();
+        }
+      }
+    };
+
     const frame = () => {
       clock += 16.7;
       raf = requestAnimationFrame(frame);
@@ -144,11 +173,14 @@ export function ShaderCanvas({ video, shader, width, height }: Props) {
       } else {
         drawFallback(clock);
       }
-      process();
-
-      ctx.imageSmoothingEnabled = false;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(buf, 0, 0, w, h, 0, 0, canvas.width, canvas.height);
+      if (shader === "dotmatrix") {
+        renderDotMatrix();
+      } else {
+        process();
+        ctx.imageSmoothingEnabled = false;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(buf, 0, 0, w, h, 0, 0, canvas.width, canvas.height);
+      }
     };
 
     raf = requestAnimationFrame(frame);

@@ -91,7 +91,7 @@ export function Stage({ format, video, onVideo }: Props) {
           <div className="testpattern" style={maskStyle} aria-hidden />
         ) : null}
 
-        {format.overlay === "notch" ? <div className="ov-notch" /> : null}
+        {format.overlay === "island" ? <div className="ov-island" /> : null}
         {format.overlay === "hinge" ? <div className="ov-hinge" /> : null}
         {format.overlay === "weather" ? (
           <div className="ov-weather">

@@ -7,12 +7,10 @@ import { PlaybackControls } from "./PlaybackControls.tsx";
 export function App() {
   const [activeId, setActiveId] = useState(DEFAULT_FORMAT_ID);
   const [videoEl, setVideoEl] = useState<HTMLVideoElement | null>(null);
-  const [expanded, setExpanded] = useState(false);
   const format = getFormat(activeId);
 
   const select = (id: string) => {
     setActiveId(id);
-    setExpanded(false);
   };
 
   return (
@@ -35,17 +33,6 @@ export function App() {
               <span className="showcase__badge"> · {format.badge}</span>
             ) : null}
           </div>
-          <button
-            type="button"
-            className="learnmore"
-            aria-expanded={expanded}
-            onClick={() => setExpanded((v) => !v)}
-          >
-            {expanded ? "Less ▴" : "Learn More ▾"}
-          </button>
-          <p className={`blurb ${expanded ? "blurb--open" : ""}`}>
-            {format.blurb}
-          </p>
         </div>
       </main>
 
